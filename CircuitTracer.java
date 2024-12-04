@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +25,17 @@ public class CircuitTracer {
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
+		
 		//TODO: print out clear usage instructions when there are problems with
 		// any command line args
+		System.out.println("\n                 ERROR: Invalid command line arguments.");
+		System.out.println("----------------------------------------------------------------------------");
+		System.out.println("Usage: java CircuitTracer -s|-q -c|-g <inputfile>");
+		System.out.println("  -s for stack or -q for queue. -c for console or -g for GUI.");
+		System.out.println("  <inputfile> is the name of the file to read for the circuit board.");
+		System.out.println("----------------------------------------------------------------------------");
+		System.out.println("Example of valid input: \"java CircuitTracer -s -c grid.dat\"");
+		System.out.println("----------------------------------------------------------------------------\n");
 	}
 	
 	/** 
@@ -40,10 +50,52 @@ public class CircuitTracer {
 			printUsage();
 			return; //exit the constructor immediately
 		}
+
+		//Validates the first arg as either -s or -q
+		if (!args[0].equals("-s") && !args[0].equals("-q")) {
+			printUsage();
+			return;
+		}
+		//if it passes the checks, then it will be stored in the variable
+		String storageType = args[0];
+
+		//Validates the second arg as either -c or -g
+		if (!args[1].equals("-c") && !args[1].equals("-g")) {
+			printUsage();
+			return;
+		}
+		//if it passes the checks, then it will be stored in the variable
+		String outputType = args[1];
+	
+		String fileName = args[2]; //store the third arg as the filename
+
 		//TODO: initialize the Storage to use either a stack or queue
+		if(storageType.equals("-s")) {
+			//stack
+			Storage<TraceState> storage = new Storage<TraceState>(Storage.DataStructure.stack);
+		} else {
+			//queue
+			Storage<TraceState> storage = new Storage<TraceState>(Storage.DataStructure.queue);
+		}
+		
 		//TODO: read in the CircuitBoard from the given file
-		//TODO: run the search for best paths
+		try {
+			CircuitBoard board = new CircuitBoard(fileName);
+			//TODO: run the search for best paths
+			//THIS IS NOT DONE
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: " + fileName);
+			return;
+		}
+		
 		//TODO: output results to console or GUI, according to specified choice
+		if (outputType.equals("-c")) {
+			//console output
+		} else {
+			System.out.println("GUI output not implemented.");
+			return;
+		}
 	}
 	
 } // class CircuitTracer
