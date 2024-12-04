@@ -70,6 +70,10 @@ public class CircuitBoard {
 			for(int row = 0; row < ROWS; row++) { //loop through rows
 
 				for(int col = 0; col < COLS; col++) { //loop through columns
+					if(!fileScan.hasNext()) { //checks if there is a next character
+						fileScan.close();
+						throw new InvalidFileFormatException("Not enough characters in row " + row); 
+					}
 
 					char c = fileScan.next().charAt(0); //saves each character in row to c
 
@@ -87,6 +91,17 @@ public class CircuitBoard {
 						endCount++; //increment endCount
 					}
 				}
+				// this is to check for extra elements in the row, if there are any, throw a detailed exception
+				if (fileScan.hasNext()) {
+					String extraElement = fileScan.nextLine().trim();
+					if (!extraElement.isEmpty()) {
+						throw new InvalidFileFormatException("Extra elements found in row " + row);
+					}
+				}
+			}
+			//This check is to see if there are any extra rows in the file, if there are, throw a detailed exception
+			if (fileScan.hasNext()) {
+				throw new InvalidFileFormatException("Extra rows found in file");
 			}
 
 			if(startCount != 1 || endCount != 1) { //if startCount or endCount are not equal to 1, throw an exception
