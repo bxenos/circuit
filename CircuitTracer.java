@@ -88,7 +88,7 @@ public class CircuitTracer {
 		try {
 			board = new CircuitBoard(fileName);
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found: " + fileName);
+			System.out.println("File not found: " + fileName + " - " + e);
 			return;
 		} catch (InvalidFileFormatException e) {
 			System.out.println("Invalid file format: " + e);
