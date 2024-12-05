@@ -91,7 +91,7 @@ public class CircuitTracer {
 			System.out.println("File not found: " + fileName + " - " + e);
 			return;
 		} catch (InvalidFileFormatException e) {
-			System.out.println("Invalid file format: " + e);
+			System.out.println("Invalid file format: " + fileName + " - " + e);
 			return;
 		}
 
@@ -116,8 +116,8 @@ public class CircuitTracer {
 			stateStore.store(tracer1);
 		}
 		if (board.isOpen(x - 1, y)) { // LEFT
-			TraceState tracer2 = new TraceState(board, x - 1, y);
-			stateStore.store(tracer2);
+				TraceState tracer2 = new TraceState(board, x - 1, y);
+				stateStore.store(tracer2);
 		}
 		if (board.isOpen(x, y + 1)) { // DOWN
 			TraceState tracer3 = new TraceState(board, x, y + 1);
@@ -162,20 +162,20 @@ public class CircuitTracer {
 				// initializing x and y to the current point of the board
 				x = currentTraceState.getRow();
 				y = currentTraceState.getCol();
-				// checking each open adjacent posiotion to that starting point "tracer"
-				if (board.isOpen(x + 1, y)) { // RIGHT
+				// checking each open adjacent position again, but this time for the currentTraceState
+				if (currentTraceState.isOpen(x + 1, y)) { // RIGHT
 					TraceState tracer1 = new TraceState(currentTraceState, x + 1, y);
 					stateStore.store(tracer1);
 				}
-				if (board.isOpen(x - 1, y)) { // LEFT
+				if (currentTraceState.isOpen(x - 1, y)) { // LEFT
 					TraceState tracer2 = new TraceState(currentTraceState, x - 1, y);
 					stateStore.store(tracer2);
 				}
-				if (board.isOpen(x, y + 1)) { // DOWN
+				if (currentTraceState.isOpen(x, y + 1)) { // DOWN
 					TraceState tracer3 = new TraceState(currentTraceState, x, y + 1);
 					stateStore.store(tracer3);
 				}
-				if (board.isOpen(x, y - 1)) { // UP
+				if (currentTraceState.isOpen(x, y - 1)) { // UP
 					TraceState tracer4 = new TraceState(currentTraceState, x, y - 1);
 					stateStore.store(tracer4);
 				}

@@ -1,1 +1,1 @@
-Invalid file format: InvalidFileFormatException: Board should have 1 starting and end point, found 1 start points and 0 end points
+Invalid file format: invalid3.dat - InvalidFileFormatException: Board should have 1 starting and end point, found 1 start points and 0 end points

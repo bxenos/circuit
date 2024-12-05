@@ -1,5 +1,1 @@
-Exception in thread "main" OccupiedPositionException: row 0, col 3 contains 'T'
-	at CircuitBoard.makeTrace(CircuitBoard.java:171)
-	at TraceState.<init>(TraceState.java:33)
-	at CircuitTracer.<init>(CircuitTracer.java:171)
-	at CircuitTracer.main(CircuitTracer.java:24)
+GUI output not implemented.
