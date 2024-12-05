@@ -168,7 +168,7 @@ public class CircuitBoard {
 		if (isOpen(row, col)) {
 			board[row][col] = TRACE;
 		} else {
-			throw new OccupiedPositionException("row " + row + ", col " + col + "contains '" + board[row][col] + "'");
+			throw new OccupiedPositionException("row " + row + ", col " + col + " contains '" + board[row][col] + "'");
 		}
 	}
 	

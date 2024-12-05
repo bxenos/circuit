@@ -1,2 +1,10 @@
-Error: Could not find or load main class CircuitTracer
-Caused by: java.lang.ClassNotFoundException: CircuitTracer
+
+                 ERROR: Invalid command line arguments.
+----------------------------------------------------------------------------
+Usage: java CircuitTracer -s|-q -c|-g <inputfile>
+  -s for stack or -q for queue. -c for console or -g for GUI.
+  <inputfile> is the name of the file to read for the circuit board.
+----------------------------------------------------------------------------
+Example of valid input: "java CircuitTracer -s -c grid.dat"
+----------------------------------------------------------------------------
+

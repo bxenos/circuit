@@ -84,104 +84,110 @@ public class CircuitTracer {
 		}
 
 		// TODO: read in the CircuitBoard from the given file
+		CircuitBoard board = null;
 		try {
-			CircuitBoard board = new CircuitBoard(fileName);
-			// TODO: run the search for best paths
-			// *PSEUDO-CODE* initialize an empty List called bestPaths that stores objects
-			// of type TraceState
-			ArrayList<TraceState> bestPaths = new ArrayList<TraceState>();
-
-			// *PSEUDO-CODE* add a new initial TraceState object (a path with one trace) to
-			// stateStore for each open position adjacent to the starting component
-			// initializing x and y to the starting point of the board
-			int x = board.getStartingPoint().x;
-			int y = board.getStartingPoint().y;
-			// initialize a new TraceState object called tracer
-			TraceState tracer = new TraceState(board, x, y);
-			stateStore.store(tracer);
-
-			// checking each open adjacent posiotion to that starting point "tracer"
-			if (board.isOpen(x + 1, y)) { // RIGHT
-				TraceState tracer1 = new TraceState(tracer, x + 1, y);
-				stateStore.store(tracer1);
-			}
-			if (board.isOpen(x - 1, y)) { // LEFT
-				TraceState tracer2 = new TraceState(tracer, x - 1, y);
-				stateStore.store(tracer2);
-			}
-			if (board.isOpen(x, y + 1)) { // DOWN
-				TraceState tracer3 = new TraceState(tracer, x, y + 1);
-				stateStore.store(tracer3);
-			}
-			if (board.isOpen(x, y - 1)) { // UP
-				TraceState tracer4 = new TraceState(tracer, x, y - 1);
-				stateStore.store(tracer4);
-			}
-
-			// *PSEUDO-CODE* while (!stateStore.isEmpty)
-			while (!stateStore.isEmpty()) {
-
-				// *PSEUDO-CODE* retrieve the next TraceState object from stateStore
-				TraceState currentTraceState = stateStore.retrieve();
-
-				// *PSEUDO-CODE* if that TraceState object is a solution (ends with a position
-				// adjacent to the ending component),
-				if (currentTraceState.isSolution()) {
-
-					// *PSEUDO-CODE* if bestPaths is empty or the TraceState object's path is equal
-					// in length to one of the TraceStates in bestPaths,
-					if (bestPaths.isEmpty()
-							|| currentTraceState.getPath().size() == bestPaths.get(0).getPath().size()) {
-
-						// *PSEUDO-CODE* add it to bestPaths
-						bestPaths.add(currentTraceState);
-
-						// *PSEUDO-CODE* else if that TraceState object's path is shorter than the paths
-						// in bestPaths,
-					} else if (currentTraceState.getPath().size() < bestPaths.get(0).getPath().size()) {
-
-						// *PSEUDO-CODE* clear bestPaths and add the current TraceState as the new
-						// shortest path
-						bestPaths.clear();
-						bestPaths.add(currentTraceState);
-					}
-				}
-
-				// *PSEUDO-CODE* else generate all valid next TraceState objects from the
-				// current TraceState and add them to stateStore
-				else {
-					// initializing x and y to the current point of the board
-					x = currentTraceState.getRow();
-					y = currentTraceState.getCol();
-					// checking each open adjacent posiotion to that starting point "tracer"
-					if (board.isOpen(x + 1, y)) { // RIGHT
-						TraceState tracer1 = new TraceState(currentTraceState, x + 1, y);
-						stateStore.store(tracer1);
-					}
-					if (board.isOpen(x - 1, y)) { // LEFT
-						TraceState tracer2 = new TraceState(currentTraceState, x - 1, y);
-						stateStore.store(tracer2);
-					}
-					if (board.isOpen(x, y + 1)) { // DOWN
-						TraceState tracer3 = new TraceState(currentTraceState, x, y + 1);
-						stateStore.store(tracer3);
-					}
-					if (board.isOpen(x, y - 1)) { // UP
-						TraceState tracer4 = new TraceState(currentTraceState, x, y - 1);
-						stateStore.store(tracer4);
-					}
-				}
-			}
-			
-		//if there is an error wiht finding the file, it will print out the error message
+			board = new CircuitBoard(fileName);
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + fileName);
 			return;
+		} catch (InvalidFileFormatException e) {
+			System.out.println("Invalid file format: " + e);
+			return;
+		}
+
+		// TODO: run the search for best paths
+		// *PSEUDO-CODE* initialize an empty List called bestPaths that stores objects
+		// of type TraceState
+		ArrayList<TraceState> bestPaths = new ArrayList<TraceState>();
+
+		// *PSEUDO-CODE* add a new initial TraceState object (a path with one trace) to
+		// stateStore for each open position adjacent to the starting component
+		// initializing x and y to the starting point of the board
+		int x = board.getStartingPoint().x;
+		int y = board.getStartingPoint().y;
+
+		// initialize a new TraceState object called tracer
+		// TraceState tracer = new TraceState(board, x, y);
+		// stateStore.store(tracer);
+
+		// checking each open adjacent posiotion to that starting point "tracer"
+		if (board.isOpen(x + 1, y)) { // RIGHT
+			TraceState tracer1 = new TraceState(board, x + 1, y);
+			stateStore.store(tracer1);
+		}
+		if (board.isOpen(x - 1, y)) { // LEFT
+			TraceState tracer2 = new TraceState(board, x - 1, y);
+			stateStore.store(tracer2);
+		}
+		if (board.isOpen(x, y + 1)) { // DOWN
+			TraceState tracer3 = new TraceState(board, x, y + 1);
+			stateStore.store(tracer3);
+		}
+		if (board.isOpen(x, y - 1)) { // UP
+			TraceState tracer4 = new TraceState(board, x, y - 1);
+			stateStore.store(tracer4);
+		}
+
+		// *PSEUDO-CODE* while (!stateStore.isEmpty)
+		while (!stateStore.isEmpty()) {
+
+			// *PSEUDO-CODE* retrieve the next TraceState object from stateStore
+			TraceState currentTraceState = stateStore.retrieve();
+
+			// *PSEUDO-CODE* if that TraceState object is a solution (ends with a position
+			// adjacent to the ending component),
+			if (currentTraceState.isSolution()) {
+
+				// *PSEUDO-CODE* if bestPaths is empty or the TraceState object's path is equal
+				// in length to one of the TraceStates in bestPaths,
+				if (bestPaths.isEmpty() || currentTraceState.pathLength() == bestPaths.get(0).pathLength()) {
+
+					// *PSEUDO-CODE* add it to bestPaths
+					bestPaths.add(currentTraceState);
+
+					// *PSEUDO-CODE* else if that TraceState object's path is shorter than the paths
+					// in bestPaths,
+				} else if (currentTraceState.pathLength() < bestPaths.get(0).pathLength()) {
+
+					// *PSEUDO-CODE* clear bestPaths and add the current TraceState as the new
+					// shortest path
+					bestPaths.clear();
+					bestPaths.add(currentTraceState);
+				}
+			}
+
+			// *PSEUDO-CODE* else generate all valid next TraceState objects from the
+			// current TraceState and add them to stateStore
+			else {
+				// initializing x and y to the current point of the board
+				x = currentTraceState.getRow();
+				y = currentTraceState.getCol();
+				// checking each open adjacent posiotion to that starting point "tracer"
+				if (board.isOpen(x + 1, y)) { // RIGHT
+					TraceState tracer1 = new TraceState(currentTraceState, x + 1, y);
+					stateStore.store(tracer1);
+				}
+				if (board.isOpen(x - 1, y)) { // LEFT
+					TraceState tracer2 = new TraceState(currentTraceState, x - 1, y);
+					stateStore.store(tracer2);
+				}
+				if (board.isOpen(x, y + 1)) { // DOWN
+					TraceState tracer3 = new TraceState(currentTraceState, x, y + 1);
+					stateStore.store(tracer3);
+				}
+				if (board.isOpen(x, y - 1)) { // UP
+					TraceState tracer4 = new TraceState(currentTraceState, x, y - 1);
+					stateStore.store(tracer4);
+				}
+			}
 		}
 
 		// TODO: output results to console or GUI, according to specified choice
 		if (outputType.equals("-c")) {
 			// console output
+			for (TraceState path : bestPaths) {
+				System.out.println(path.getBoard().toString());
+			}
 		} else {
 			System.out.println("GUI output not implemented.");
 			return;
