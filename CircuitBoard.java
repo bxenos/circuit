@@ -6,7 +6,8 @@ import java.util.Scanner;
 /**
  * Represents a 2D circuit board as read from an input file.
  *  
- * @author mvail
+ * @author mvail 
+ * @author Brayden Xenos
  */
 public class CircuitBoard {
 	/** current contents of the board */
@@ -37,8 +38,9 @@ public class CircuitBoard {
 	 *  'T' is not expected in input files - represents part of the trace
 	 *   connecting components 1 and 2 in the solution
 	 * 
-	 * @param filename
-	 * 		file containing a grid of characters
+	 * @author Brayden Xenos
+	 * 
+	 * @param filename file containing a grid of characters
 	 * @throws FileNotFoundException if Scanner cannot open or read the file
 	 * @throws InvalidFileFormatException for any file formatting or content issue
 	 */

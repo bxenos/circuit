@@ -8,7 +8,8 @@ import java.util.ArrayList;
  * search state storage structure and displaying output to the console or to
  * a GUI according to options specified via command-line arguments.
  * 
- * @author mvail
+ * @author mvail 
+ * @author Brayden Xenos
  */
 public class CircuitTracer {
 
@@ -42,6 +43,8 @@ public class CircuitTracer {
 	/**
 	 * Set up the CircuitBoard and all other components based on command
 	 * line arguments.
+	 * 
+	 * @author Brayden Xenos
 	 * 
 	 * @param args command line arguments passed through from main()
 	 */
@@ -189,6 +192,7 @@ public class CircuitTracer {
 				System.out.println(path.getBoard().toString());
 			}
 		} else {
+			// Did not attempt extra credit
 			System.out.println("GUI output not implemented.");
 			return;
 		}
